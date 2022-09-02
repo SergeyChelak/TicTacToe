@@ -38,7 +38,7 @@ struct GameView_Previews: PreviewProvider {
     }
 }
 
-private func playerName(_ player: GameBoard.Player) -> String {
+private func playerName(_ player: Player) -> String {
     switch player {
     case .cross:
         return "Cross"

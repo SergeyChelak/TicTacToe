@@ -7,28 +7,9 @@
 
 import Foundation
 
-class GameBoard: ObservableObject {
-    enum CellState {
-        case empty, cross, zero
-    }
+class GameBoard: ObservableObject {    
     
-    enum Player {
-        case cross, zero
-        
-        static var random: Self {
-            Int.random(in: 0...1) > 0 ? .cross : .zero
-        }
-        
-        var opponent: Player {
-            self == .cross ? .zero : .cross
-        }
-        
-        var cellState: CellState {
-            self == .cross ? .cross : .zero
-        }
-    }
-    
-    enum GameResult {
+    enum GameResult: Int {
         case draw, crossWin, zeroWin
     }
     
@@ -48,9 +29,7 @@ class GameBoard: ObservableObject {
                 return .over(.zeroWin)
             }
         }
-    }
-    
-    typealias Board = [[CellState]]
+    }    
     
     static let boardSize = 3
     static let target = 3
@@ -93,43 +72,11 @@ class GameBoard: ObservableObject {
     }
     
     private func checkForWinner(row: Int, col: Int) -> Player? {
-        let deltas = [
-            [(1, 0), (-1, 0)],
-            [(0, 1), (0, -1)],
-            [(1, 1), (-1, -1)],
-            [(1, -1), (-1, 1)]
-        ]
-        for delta in deltas {
-            var total = -1
-            for direction in delta {
-                total += sum(row: row, col: col, dx: direction.0, dy: direction.1)
-            }
-            if total == Self.target {
-                return currentPlayer
-            }
-        }
-        return nil
+        board.checkForWinner(row: row, col: col, target: Self.target)
     }
-    
-    private func sum(row: Int, col: Int, dx: Int, dy: Int) -> Int {
-        guard row >= 0 && row < Self.boardSize && col >= 0 && col < Self.boardSize else {
-            return 0
-        }
-        guard board[row][col] == currentPlayer.cellState else {
-            return 0
-        }
-        return 1 + sum(row: row + dx, col: col + dy, dx: dx, dy: dy)
-    }
-    
+        
     private func hasMoreMoves() -> Bool {
-        for row in board {
-            for cell in row {
-                if cell == .empty {
-                    return true
-                }
-            }
-        }
-        return false
+        board.hasMoreMoves
     }
     
     private static func emptyBoard(_ size: Int) -> Board {
