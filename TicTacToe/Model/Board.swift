@@ -9,15 +9,22 @@ import Foundation
 
 enum CellState {
     case empty, cross, zero
-    
-    var player: Player? {
-        switch self {
+}
+
+enum GameState {
+    case playing,
+         draw,
+         crossWin,
+         zeroWin
+        
+    static func winner(_ cellState: CellState) -> Self {
+        switch cellState {
         case .cross:
-            return .cross
+            return .crossWin
         case .zero:
-            return .zero
+            return .zeroWin
         default:
-            return nil
+            return .playing
         }
     }
 }
@@ -41,47 +48,38 @@ enum Player {
 }
 
 extension Board {
-    func checkForWinner(row: Int, col: Int, target: Int) -> Player? {
-        guard let currentPlayer = self[row][col].player else {
-            return nil
-        }
-        let deltas = [
-            [(1, 0), (-1, 0)],
-            [(0, 1), (0, -1)],
-            [(1, 1), (-1, -1)],
-            [(1, -1), (-1, 1)]
-        ]
-        for delta in deltas {
-            var total = -1
-            for direction in delta {
-                total += sum(row: row, col: col, dx: direction.0, dy: direction.1, player: currentPlayer)
+    static func empty(_ size: Int) -> Board {
+        Board.init(repeating: [CellState].init(repeating: .empty, count: size),
+                   count: size)
+    }
+        
+    func calculateGameState() -> GameState {
+        for i in 0..<count {
+            if isWinnerLine(self[i][0], self[i][1], self[i][2]) {
+                return .winner(self[i][0])
             }
-            if total == target {
-                return currentPlayer
+            if isWinnerLine(self[0][i], self[1][i], self[2][i]) {
+                return .winner(self[0][i])
             }
         }
-        return nil
-    }
-    
-    private func sum(row: Int, col: Int, dx: Int, dy: Int, player: Player) -> Int {
-        guard row >= 0 && row < count,
-              col >= 0 && col < self[row].count else {
-            return 0
+        if isWinnerLine(self[0][0], self[1][1], self[2][2]) {
+            return .winner(self[0][0])
         }
-        guard self[row][col] == player.cellState else {
-            return 0
+        if isWinnerLine(self[2][0], self[1][1], self[0][2]) {
+            return .winner(self[2][0])
         }
-        return 1 + sum(row: row + dx, col: col + dy, dx: dx, dy: dy, player: player)
-    }
-    
-    var hasMoreMoves: Bool {
-        for row in self {
-            for cell in row {
-                if cell == .empty {
-                    return true
+        for i in 0..<count {
+            for j in 0..<count {
+                if self[i][j] == .empty {
+                    return .playing
                 }
             }
         }
-        return false
+        return .draw
     }
+    
+    private func isWinnerLine(_ a: CellState, _ b: CellState, _ c: CellState) -> Bool {
+        return a == b && b == c && a != .empty
+    }
+        
 }

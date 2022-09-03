@@ -47,17 +47,10 @@ private func playerName(_ player: Player) -> String {
     }
 }
 
-private func gameStateMessage(_ state: GameBoard.GameState) -> String {
+private func gameStateMessage(_ state: GameState) -> String {
     switch state {
-    case .goingOn:
+    case .playing:
         return "Make your turn"
-    case .over(let result):
-        return gameOverMessage(result)
-    }
-}
-
-private func gameOverMessage(_ gameResult: GameBoard.GameResult) -> String {
-    switch gameResult {
     case .draw:
         return "Draw"
     case .crossWin:
