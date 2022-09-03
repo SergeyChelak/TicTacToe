@@ -14,6 +14,8 @@
 		199FF13928C26B7C0009D5B2 /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199FF13828C26B7C0009D5B2 /* GameBoard.swift */; };
 		199FF14128C285A90009D5B2 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199FF14028C285A90009D5B2 /* BoardView.swift */; };
 		199FF14428C2964C0009D5B2 /* TapLocationGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199FF14328C2964C0009D5B2 /* TapLocationGesture.swift */; };
+		199FF14628C2B9C80009D5B2 /* AiPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199FF14528C2B9C80009D5B2 /* AiPlayer.swift */; };
+		199FF14828C2BE160009D5B2 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199FF14728C2BE160009D5B2 /* Board.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,8 @@
 		199FF13828C26B7C0009D5B2 /* GameBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
 		199FF14028C285A90009D5B2 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		199FF14328C2964C0009D5B2 /* TapLocationGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapLocationGesture.swift; sourceTree = "<group>"; };
+		199FF14528C2B9C80009D5B2 /* AiPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiPlayer.swift; sourceTree = "<group>"; };
+		199FF14728C2BE160009D5B2 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +92,8 @@
 			isa = PBXGroup;
 			children = (
 				199FF13828C26B7C0009D5B2 /* GameBoard.swift */,
+				199FF14528C2B9C80009D5B2 /* AiPlayer.swift */,
+				199FF14728C2BE160009D5B2 /* Board.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -174,6 +180,8 @@
 				199FF14128C285A90009D5B2 /* BoardView.swift in Sources */,
 				199FF12928C26A560009D5B2 /* TicTacToeApp.swift in Sources */,
 				199FF14428C2964C0009D5B2 /* TapLocationGesture.swift in Sources */,
+				199FF14828C2BE160009D5B2 /* Board.swift in Sources */,
+				199FF14628C2B9C80009D5B2 /* AiPlayer.swift in Sources */,
 				199FF13928C26B7C0009D5B2 /* GameBoard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
