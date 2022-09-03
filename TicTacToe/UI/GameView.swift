@@ -14,7 +14,9 @@ struct GameView: View {
         VStack {
             Text(prompt)
                 .font(.system(size: 35))
-                .foregroundColor(Color.domain.promptTextColor)
+                .foregroundStyle(
+                    LinearGradient(colors: Color.domain.promptTextColorGradient, startPoint: .leading, endPoint: .trailing)
+                )
                 .padding()
             
             BoardView(gameBoard: gameBoard, backgroundColor: Color.domain.backgroundColor)
