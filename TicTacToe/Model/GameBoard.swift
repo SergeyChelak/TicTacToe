@@ -23,7 +23,9 @@ class GameBoard: ObservableObject {
     }
     
     func isAllowedPosition(row: Int, col: Int) -> Bool {
-        guard case .playing = gameState else {
+        guard case .playing = gameState,
+              0..<Self.boardSize ~= row,
+              0..<Self.boardSize ~= col else {
             return false
         }
         return board[row][col] == .empty

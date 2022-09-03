@@ -11,6 +11,7 @@ struct BoardView: View {
     let shapeOffset: CGFloat = 10.0
     
     @ObservedObject var gameBoard: GameBoard
+    let backgroundColor: Color
     
     var body: some View {
         GeometryReader { geometry in
@@ -21,7 +22,7 @@ struct BoardView: View {
             let dy = height / CGFloat(GameBoard.boardSize)
             ZStack {
                 Rectangle()
-                    .fill(Color.blue)
+                    .fill(backgroundColor)
                     .frame(width: width, height: height, alignment: .center)
                 
                 Path { path in
@@ -37,7 +38,7 @@ struct BoardView: View {
                             path.addLine(to: CGPoint(x: width, y: y))
                         }
                     }
-                }.stroke(style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                }.stroke(Color.domain.gridColor, style: StrokeStyle(lineWidth: 2, lineCap: .round))
                 
                 Path { path in
                     for row in 0..<GameBoard.boardSize {
@@ -74,6 +75,7 @@ struct BoardView: View {
                         }
                     }
                 }.stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                    
             }.gesture(TapLocationGesture().onEnded { point in
                 let row = Int(point.x / dx)
                 let col = Int(point.y / dy)
@@ -85,6 +87,6 @@ struct BoardView: View {
 
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
-        BoardView(gameBoard: GameBoard())
+        BoardView(gameBoard: GameBoard(), backgroundColor: Color.blue)
     }
 }

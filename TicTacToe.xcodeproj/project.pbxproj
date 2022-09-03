@@ -16,6 +16,7 @@
 		199FF14428C2964C0009D5B2 /* TapLocationGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199FF14328C2964C0009D5B2 /* TapLocationGesture.swift */; };
 		199FF14628C2B9C80009D5B2 /* AiPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199FF14528C2B9C80009D5B2 /* AiPlayer.swift */; };
 		199FF14828C2BE160009D5B2 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199FF14728C2BE160009D5B2 /* Board.swift */; };
+		199FF14C28C3A7540009D5B2 /* Color+Domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199FF14B28C3A7540009D5B2 /* Color+Domain.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		199FF14328C2964C0009D5B2 /* TapLocationGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapLocationGesture.swift; sourceTree = "<group>"; };
 		199FF14528C2B9C80009D5B2 /* AiPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiPlayer.swift; sourceTree = "<group>"; };
 		199FF14728C2BE160009D5B2 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		199FF14B28C3A7540009D5B2 /* Color+Domain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Domain.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				199FF14328C2964C0009D5B2 /* TapLocationGesture.swift */,
+				199FF14B28C3A7540009D5B2 /* Color+Domain.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 				199FF14828C2BE160009D5B2 /* Board.swift in Sources */,
 				199FF14628C2B9C80009D5B2 /* AiPlayer.swift in Sources */,
 				199FF13928C26B7C0009D5B2 /* GameBoard.swift in Sources */,
+				199FF14C28C3A7540009D5B2 /* Color+Domain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,22 +12,48 @@ struct GameView: View {
     
     var body: some View {
         VStack {
-            Text("Current Player: \(playerName(gameBoard.currentPlayer))")
+            Text(prompt)
+                .font(.system(size: 25))
+                .foregroundColor(Color.domain.promptTextColor)
                 .padding()
+                .shadow(color: Color.gray, radius: 5.0, x: 5.0, y: 5.0)
             
-            BoardView(gameBoard: gameBoard)
+            BoardView(gameBoard: gameBoard, backgroundColor: Color.domain.backgroundColor)
                 .frame(width: 350, height: 350, alignment: .center)
             
-            Text(gameStateMessage(gameBoard.gameState))
-                .padding()
-            
-            Button("New Game") {
+            Button(action: {
                 gameBoard.reset()
-            }
+            }) {
+                Image("NewGameImage")
+                    .resizable()
+                    .frame(width: 100, height: 100, alignment: .center)
+            }.shadow(color: Color.gray, radius: 5.0, x: 5.0, y: 5.0)
             
         }
         .frame(minWidth: 100, maxWidth: .infinity, minHeight: 100, maxHeight: .infinity)
-        .background(Color.green)
+        .background(Color.domain.backgroundColor)
+    }
+    
+    private var prompt: String {
+        switch gameBoard.gameState {
+        case .playing:
+            return "Current Player: \(currentPlayer)"
+        case .draw:
+            return "Draw"
+        case .crossWin:
+            return "Cross win"
+        case .zeroWin:
+            return "Zero win"
+        }
+    }
+    
+    private var currentPlayer: String {
+        switch gameBoard.currentPlayer {
+        case .cross:
+            return "Cross"
+        case .zero:
+            return "Zero"
+        }
     }
 }
 
@@ -35,27 +61,5 @@ struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         let gameBoard = GameBoard()
         GameView(gameBoard: gameBoard)
-    }
-}
-
-private func playerName(_ player: Player) -> String {
-    switch player {
-    case .cross:
-        return "Cross"
-    case .zero:
-        return "Zero"
-    }
-}
-
-private func gameStateMessage(_ state: GameState) -> String {
-    switch state {
-    case .playing:
-        return "Make your turn"
-    case .draw:
-        return "Draw"
-    case .crossWin:
-        return "Cross win"
-    case .zeroWin:
-        return "Zero win"
     }
 }
