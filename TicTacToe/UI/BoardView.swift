@@ -8,9 +8,34 @@
 import SwiftUI
 
 struct BoardView: View {
+    private enum DrawMode: CaseIterable {
+        case cross, zero
+        
+        var colorGradient: [Color] {
+            switch self {
+            case .cross:
+                return Color.domain.crossColorGradient
+            case .zero:
+                return Color.domain.zeroColorGradient
+            }
+        }
+        
+        func corresponds(_ cell: CellState) -> Bool {
+            if self == .cross && cell == .cross {
+                return true
+            }
+            if self == .zero && cell == .zero {
+                return true
+            }
+            return false
+        }
+    }
+    
+    
     let shapeOffset: CGFloat = 10.0
     
     @ObservedObject var gameBoard: GameBoard
+    let backgroundColor: Color
     
     var body: some View {
         GeometryReader { geometry in
@@ -21,7 +46,7 @@ struct BoardView: View {
             let dy = height / CGFloat(GameBoard.boardSize)
             ZStack {
                 Rectangle()
-                    .fill(Color.blue)
+                    .fill(backgroundColor)
                     .frame(width: width, height: height, alignment: .center)
                 
                 Path { path in
@@ -37,43 +62,52 @@ struct BoardView: View {
                             path.addLine(to: CGPoint(x: width, y: y))
                         }
                     }
-                }.stroke(style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                }.stroke(Color.domain.gridColor, style: StrokeStyle(lineWidth: 2, lineCap: .round))
                 
-                Path { path in
-                    for row in 0..<GameBoard.boardSize {
-                        for col in 0..<GameBoard.boardSize {
-                            let gcRow = CGFloat(row)
-                            let gcCol = CGFloat(col)
-                            
-                            let topLeft = CGPoint(x: gcRow * dx + shapeOffset,
-                                                  y: gcCol * dy + shapeOffset)
-                            
-                            let topRight = CGPoint(x: dx + gcRow * dx - shapeOffset,
-                                                   y: gcCol * dy + shapeOffset)
-                            
-                            let bottomRight = CGPoint(x: dx + gcRow * dx - shapeOffset,
-                                                      y: dy + gcCol * dy - shapeOffset)
-                            
-                            let bottomLeft = CGPoint(x: gcRow * dx + shapeOffset,
-                                                     y: dy + gcCol * dy - shapeOffset)
-                            
-                            switch gameBoard.get(row: row, col: col) {
-                            case .cross:
-                                path.move(to: topLeft)
-                                path.addLine(to: bottomRight)
-                                path.move(to: topRight)
-                                path.addLine(to: bottomLeft)
-                            case .zero:
-                                let rect = CGRect(x: topLeft.x, y: topLeft.y,
-                                                  width: topRight.x - topLeft.x,
-                                                  height: bottomLeft.y - topLeft.y)
-                                path.addEllipse(in: rect)
-                            default:
-                                break
+                ForEach(DrawMode.allCases, id: \.self) { drawOption in
+                    Path { path in
+                        for row in 0..<GameBoard.boardSize {
+                            for col in 0..<GameBoard.boardSize {
+                                let cellState = gameBoard.get(row: row, col: col)
+                                guard drawOption.corresponds(cellState) else { continue }
+                                let gcRow = CGFloat(row)
+                                let gcCol = CGFloat(col)
+                                
+                                let topLeft = CGPoint(x: gcRow * dx + shapeOffset,
+                                                      y: gcCol * dy + shapeOffset)
+                                
+                                let topRight = CGPoint(x: dx + gcRow * dx - shapeOffset,
+                                                       y: gcCol * dy + shapeOffset)
+                                
+                                let bottomRight = CGPoint(x: dx + gcRow * dx - shapeOffset,
+                                                          y: dy + gcCol * dy - shapeOffset)
+                                
+                                let bottomLeft = CGPoint(x: gcRow * dx + shapeOffset,
+                                                         y: dy + gcCol * dy - shapeOffset)
+                                
+                                switch cellState {
+                                case .cross:
+                                    path.move(to: topLeft)
+                                    path.addLine(to: bottomRight)
+                                    path.move(to: topRight)
+                                    path.addLine(to: bottomLeft)
+                                case .zero:
+                                    let rect = CGRect(x: topLeft.x, y: topLeft.y,
+                                                      width: topRight.x - topLeft.x,
+                                                      height: bottomLeft.y - topLeft.y)
+                                    path.addEllipse(in: rect)
+                                default:
+                                    break
+                                }
                             }
                         }
-                    }
-                }.stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                    }.stroke(
+                        LinearGradient(gradient: Gradient(colors: drawOption.colorGradient),
+                                       startPoint: .leading,
+                                       endPoint: .trailing),
+                        style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                }
+                
             }.gesture(TapLocationGesture().onEnded { point in
                 let row = Int(point.x / dx)
                 let col = Int(point.y / dy)
@@ -85,6 +119,6 @@ struct BoardView: View {
 
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
-        BoardView(gameBoard: GameBoard())
+        BoardView(gameBoard: GameBoard(), backgroundColor: Color.blue)
     }
 }

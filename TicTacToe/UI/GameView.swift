@@ -12,22 +12,46 @@ struct GameView: View {
     
     var body: some View {
         VStack {
-            Text("Current Player: \(playerName(gameBoard.currentPlayer))")
+            Text(prompt)
+                .font(.system(size: 35))
+                .foregroundColor(Color.domain.promptTextColor)
                 .padding()
             
-            BoardView(gameBoard: gameBoard)
+            BoardView(gameBoard: gameBoard, backgroundColor: Color.domain.backgroundColor)
                 .frame(width: 350, height: 350, alignment: .center)
             
-            Text(gameStateMessage(gameBoard.gameState))
-                .padding()
-            
-            Button("New Game") {
+            Button(action: {
                 gameBoard.reset()
+            }) {
+                Image("NewGameImage")
+                    .resizable()
+                    .frame(width: 130, height: 130, alignment: .center)
             }
-            
         }
         .frame(minWidth: 100, maxWidth: .infinity, minHeight: 100, maxHeight: .infinity)
-        .background(Color.green)
+        .background(Color.domain.backgroundColor)
+    }
+    
+    private var prompt: String {
+        switch gameBoard.gameState {
+        case .playing:
+            return playerPrompt
+        case .draw:
+            return "Draw"
+        case .crossWin:
+            return "Cross win"
+        case .zeroWin:
+            return "Zero win"
+        }
+    }
+    
+    private var playerPrompt: String {
+        switch gameBoard.currentPlayer {
+        case .cross:
+            return "Wait..."
+        case .zero:
+            return "Your turn"
+        }
     }
 }
 
@@ -35,27 +59,5 @@ struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         let gameBoard = GameBoard()
         GameView(gameBoard: gameBoard)
-    }
-}
-
-private func playerName(_ player: Player) -> String {
-    switch player {
-    case .cross:
-        return "Cross"
-    case .zero:
-        return "Zero"
-    }
-}
-
-private func gameStateMessage(_ state: GameState) -> String {
-    switch state {
-    case .playing:
-        return "Make your turn"
-    case .draw:
-        return "Draw"
-    case .crossWin:
-        return "Cross win"
-    case .zeroWin:
-        return "Zero win"
     }
 }
