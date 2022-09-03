@@ -16,7 +16,6 @@ struct GameView: View {
                 .font(.system(size: 25))
                 .foregroundColor(Color.domain.promptTextColor)
                 .padding()
-                .shadow(color: Color.gray, radius: 5.0, x: 5.0, y: 5.0)
             
             BoardView(gameBoard: gameBoard, backgroundColor: Color.domain.backgroundColor)
                 .frame(width: 350, height: 350, alignment: .center)
@@ -27,8 +26,7 @@ struct GameView: View {
                 Image("NewGameImage")
                     .resizable()
                     .frame(width: 130, height: 130, alignment: .center)
-            }.shadow(color: Color.gray, radius: 10.0, x: 5.0, y: 5.0)
-            
+            }
         }
         .frame(minWidth: 100, maxWidth: .infinity, minHeight: 100, maxHeight: .infinity)
         .background(Color.domain.backgroundColor)

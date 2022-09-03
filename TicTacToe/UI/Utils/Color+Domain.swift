@@ -11,9 +11,9 @@ import SwiftUI
 extension Color {
     
     struct Domain {
-        let backgroundColor = Color.white
+        let backgroundColor = Color.indigo
         let gridColor = Color.gray
-        let promptTextColor = Color.blue
+        let promptTextColor = Color.yellow
         let crossColorGradient: [Color] = [.yellow, .blue, .yellow, .green]
         let zeroColorGradient: [Color] = [.yellow, .red, .yellow, .orange]
     }
