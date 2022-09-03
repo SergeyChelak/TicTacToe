@@ -13,7 +13,7 @@ struct GameView: View {
     var body: some View {
         VStack {
             Text(prompt)
-                .font(.system(size: 25))
+                .font(.system(size: 35))
                 .foregroundColor(Color.domain.promptTextColor)
                 .padding()
             
@@ -35,7 +35,7 @@ struct GameView: View {
     private var prompt: String {
         switch gameBoard.gameState {
         case .playing:
-            return "Current Player: \(currentPlayer)"
+            return playerPrompt
         case .draw:
             return "Draw"
         case .crossWin:
@@ -45,12 +45,12 @@ struct GameView: View {
         }
     }
     
-    private var currentPlayer: String {
+    private var playerPrompt: String {
         switch gameBoard.currentPlayer {
         case .cross:
-            return "Cross"
+            return "Wait..."
         case .zero:
-            return "Zero"
+            return "Your turn"
         }
     }
 }
