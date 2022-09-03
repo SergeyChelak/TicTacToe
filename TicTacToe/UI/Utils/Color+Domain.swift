@@ -14,6 +14,8 @@ extension Color {
         let backgroundColor = Color.white
         let gridColor = Color.gray
         let promptTextColor = Color.blue
+        let crossColorGradient: [Color] = [.yellow, .blue, .yellow, .green]
+        let zeroColorGradient: [Color] = [.yellow, .red, .yellow, .orange]
     }
     
     static let domain = Domain()

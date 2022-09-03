@@ -26,8 +26,8 @@ struct GameView: View {
             }) {
                 Image("NewGameImage")
                     .resizable()
-                    .frame(width: 100, height: 100, alignment: .center)
-            }.shadow(color: Color.gray, radius: 5.0, x: 5.0, y: 5.0)
+                    .frame(width: 130, height: 130, alignment: .center)
+            }.shadow(color: Color.gray, radius: 10.0, x: 5.0, y: 5.0)
             
         }
         .frame(minWidth: 100, maxWidth: .infinity, minHeight: 100, maxHeight: .infinity)
